@@ -1,0 +1,350 @@
+﻿<Page
+    x:Class="ClientsManager.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:ClientsManager.Core.Models"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <Flyout
+            x:Key="addClienteFlyout"
+            LightDismissOverlayMode="On"
+            Placement="Bottom">
+
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="MaxWidth" Value="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" />
+                    <Setter Property="MaxHeight" Value="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+
+            <Flyout.Content>
+                <Grid Width="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" Height="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <CommandBar Margin="{StaticResource MediumLeftRightMargin}">
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.PostClientCommand}"
+                            Icon="Accept"
+                            Label="Adicionar cliente" />
+                        <CommandBar.Content>
+                            <Grid Visibility="{x:Bind ViewModel.PostedSuccess, Mode=OneWay}">
+                                <Ellipse
+                                    Width="25"
+                                    Height="25"
+                                    Fill="DarkGreen" />
+                                <SymbolIcon Foreground="White" Symbol="Accept" />
+                            </Grid>
+                        </CommandBar.Content>
+                    </CommandBar>
+
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+
+                        <TextBlock>
+                            <Run FontSize="36" Text="Novo Cliente" />
+                            <LineBreak />
+                        </TextBlock>
+
+                        <TextBox Header="Nome do Cliente:" Text="{x:Bind ViewModel.ClienteName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="CPF:" Text="{x:Bind ViewModel.ClienteCPF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="Data de nascimento" Text="{x:Bind ViewModel.ClienteBirthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    </StackPanel>
+                </Grid>
+            </Flyout.Content>
+        </Flyout>
+
+        <Flyout
+            x:Key="updateClienteFlyout"
+            LightDismissOverlayMode="On"
+            Placement="Bottom">
+
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="MaxWidth" Value="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" />
+                    <Setter Property="MaxHeight" Value="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+
+            <Flyout.Content>
+                <Grid Width="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" Height="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <CommandBar Margin="{StaticResource MediumLeftRightMargin}">
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.PutClienteCommand}"
+                            Icon="Accept"
+                            Label="Adicionar cliente" />
+                        <CommandBar.Content>
+                            <Grid Visibility="{x:Bind ViewModel.PostedSuccess, Mode=OneWay}">
+                                <Ellipse
+                                    Width="25"
+                                    Height="25"
+                                    Fill="DarkGreen" />
+                                <SymbolIcon Foreground="White" Symbol="Accept" />
+                            </Grid>
+                        </CommandBar.Content>
+                    </CommandBar>
+
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+
+                        <TextBlock>
+                            <Run FontSize="36" Text="Novo Cliente" />
+                            <LineBreak />
+                        </TextBlock>
+
+                        <TextBox Header="Nome do Cliente:" Text="{x:Bind ViewModel.ClienteName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="CPF:" Text="{x:Bind ViewModel.ClienteCPF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="Data de nascimento" Text="{x:Bind ViewModel.ClienteBirthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    </StackPanel>
+                </Grid>
+            </Flyout.Content>
+        </Flyout>
+
+        <Flyout
+            x:Key="addAdressFlyout"
+            LightDismissOverlayMode="On"
+            Placement="Bottom">
+
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="MaxWidth" Value="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" />
+                    <Setter Property="MaxHeight" Value="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+
+            <Flyout.Content>
+                <Grid Width="{x:Bind ViewModel.FlyoutWidth, Mode=OneWay}" Height="{x:Bind ViewModel.FlyoutHeight, Mode=OneWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <CommandBar Margin="{StaticResource MediumLeftRightMargin}">
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.PostAdressCommand}"
+                            Icon="Accept"
+                            Label="Adicionar endereço" />
+                        <CommandBar.Content>
+                            <Grid Visibility="{x:Bind ViewModel.PostedSuccess, Mode=OneWay}">
+                                <Ellipse
+                                    Width="25"
+                                    Height="25"
+                                    Fill="DarkGreen" />
+                                <SymbolIcon Foreground="White" Symbol="Accept" />
+                            </Grid>
+                        </CommandBar.Content>
+                    </CommandBar>
+
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+
+                        <TextBlock>
+                            <Run FontSize="36" Text="Adicionar endereço ao cliente" />
+                            <LineBreak />
+                        </TextBlock>
+
+                        <TextBox Header="Logradouro:" Text="{x:Bind ViewModel.EndLogradouro, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="Bairro:" Text="{x:Bind ViewModel.EndBairro, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="Cidade:" Text="{x:Bind ViewModel.EndCidade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Border Height="10" />
+                        <TextBox Header="Estado:" Text="{x:Bind ViewModel.EndEstado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    </StackPanel>
+
+                </Grid>
+            </Flyout.Content>
+
+        </Flyout>
+
+    </Page.Resources>
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            x:Uid="Main_Title"
+            Grid.Row="0"
+            Margin="{StaticResource MediumLeftRightMargin}"
+            Style="{StaticResource PageTitleStyle}" />
+
+        <Border
+            x:Name="flyoutBorder"
+            Grid.RowSpan="3"
+            Margin="0,0,0,300"
+            VerticalAlignment="Center" />
+
+        <Grid Grid.Row="1" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <FlipView
+                x:Name="clientesFlipView"
+                Margin="{StaticResource MediumLeftTopRightBottomMargin}"
+                HorizontalAlignment="Center"
+                CornerRadius="5"
+                ItemsSource="{x:Bind ViewModel.ClientesCollection, Mode=OneWay}">
+
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.SelectionChangedCommand}" CommandParameter="{x:Bind clientesFlipView}" />
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+
+                <FlipView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Cliente">
+                        <Grid Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontSize="36">
+                                <Run Text="Cliente ID:" />
+                                <Run Text="{x:Bind Id}" />
+                            </TextBlock>
+
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="{StaticResource MediumLeftTopRightBottomMargin}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top">
+                                <TextBlock>
+                                    <LineBreak />
+                                    <LineBreak />
+                                </TextBlock>
+
+                                <TextBlock FontSize="{StaticResource LargeFontSize}">
+                                    <Run Text="Nome:" />
+                                    <Run Text="{x:Bind Nome}" />
+                                </TextBlock>
+
+                                <TextBlock FontSize="{StaticResource LargeFontSize}">
+                                    <Run Text="CPF:" />
+                                    <Run Text="{x:Bind CPF}" />
+                                </TextBlock>
+
+                                <TextBlock FontSize="{StaticResource LargeFontSize}">
+                                    <Run Text="Data de nascimento:" />
+                                    <Run Text="{x:Bind DataNascimento}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+
+            </FlipView>
+
+            <CommandBar Grid.Row="1" HorizontalAlignment="Center">
+                <AppBarButton
+                    Command="{x:Bind ViewModel.UpadateClienteCommand}"
+                    CommandParameter="{StaticResource updateClienteFlyout}"
+                    Icon="ContactInfo"
+                    Label="Atulizar cliente" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.AddAdressCommand}"
+                    CommandParameter="{StaticResource addAdressFlyout}"
+                    Icon="PostUpdate"
+                    Label="Adicionar endereço" />
+            </CommandBar>
+
+            <GridView
+                Grid.Row="2"
+                Margin="{StaticResource MediumLeftTopRightBottomMargin}"
+                HorizontalAlignment="Center"
+                ItemsSource="{x:Bind ViewModel.CurrentEnderecosCollection, Mode=OneWay}">
+
+                <GridView.HeaderTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock FontSize="{StaticResource LargeFontSize}">
+                            <Run Text="Endereço(s) com cadastro para este cliente:" />
+                        </TextBlock>
+                    </DataTemplate>
+                </GridView.HeaderTemplate>
+
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Endereco">
+                        <StackPanel Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+
+                            <TextBlock FontSize="{StaticResource MediumFontSize}">
+                                <Run Text="Logradouro:" />
+                                <Run Text="{x:Bind Logradouro}" />
+                            </TextBlock>
+
+                            <TextBlock FontSize="{StaticResource MediumFontSize}">
+                                <Run Text="Bairro:" />
+                                <Run Text="{x:Bind Bairro}" />
+                            </TextBlock>
+
+                            <TextBlock FontSize="{StaticResource MediumFontSize}">
+                                <Run Text="Cidade:" />
+                                <Run Text="{x:Bind Cidade}" />
+                            </TextBlock>
+
+                            <TextBlock FontSize="{StaticResource MediumFontSize}">
+                                <Run Text="Estado:" />
+                                <Run Text="{x:Bind Estado}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+
+            </GridView>
+
+        </Grid>
+
+        <CommandBar Grid.Row="2">
+            <AppBarButton
+                Command="{x:Bind ViewModel.AddClientCommand}"
+                CommandParameter="{StaticResource addClienteFlyout}"
+                Icon="AddFriend"
+                Label="Adicionar novo cliente" />
+            <AppBarButton
+                Command="{x:Bind ViewModel.RefreshCOmmand}"
+                CommandParameter="{x:Bind clientesFlipView}"
+                Icon="Refresh"
+                Label="Atualizar página" />
+        </CommandBar>
+    </Grid>
+</Page>
